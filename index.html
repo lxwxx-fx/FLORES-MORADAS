@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!-- Landing page "Flores Moradas" - Regalo digital por el 9 de octubre -->
+<!-- Estructura simple en HTML, CSS y JS puro. Sin frameworks ni build. -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Descripción para buscadores y vista previa -->
+  <meta name="description" content="Un regalo digital con flores moradas como símbolo de amistad, alegría y cariño. Para Kiara - 9 de octubre." />
+  <meta name="theme-color" content="#F4EDFD" />
+  <!-- Metadatos para compartir en redes -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Para Kiara — Flores Moradas 💜" />
+  <meta property="og:description" content="Un regalo digital con flores moradas: amistad, alegría y cariño. 9 de octubre." />
+  <meta property="og:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23C4A1F0' stroke='%237C3AED' stroke-width='3'><ellipse cx='50' cy='22' rx='14' ry='20'/><ellipse cx='50' cy='22' rx='14' ry='20' transform='rotate(72 50 55)'/><ellipse cx='50' cy='22' rx='14' ry='20' transform='rotate(144 50 55)'/><ellipse cx='50' cy='22' rx='14' ry='20' transform='rotate(216 50 55)'/><ellipse cx='50' cy='22' rx='14' ry='20' transform='rotate(288 50 55)'/></g><circle cx='50' cy='55' r='16' fill='%234c1d95'/></svg>" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Para Kiara — Flores Moradas 💜" />
+  <meta name="twitter:description" content="Un regalo digital con flores moradas: amistad, alegría y cariño. 9 de octubre." />
+  <!-- Favicon con flor morada SVG dibujada (sin emojis ni archivos externos: el jacinto no existe en Windows y salia como rectangulo) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23C4A1F0' stroke='%237C3AED' stroke-width='3'><ellipse cx='50' cy='22' rx='14' ry='20'/><ellipse cx='50' cy='22' rx='14' ry='20' transform='rotate(72 50 55)'/><ellipse cx='50' cy='22' rx='14' ry='20' transform='rotate(144 50 55)'/><ellipse cx='50' cy='22' rx='14' ry='20' transform='rotate(216 50 55)'/><ellipse cx='50' cy='22' rx='14' ry='20' transform='rotate(288 50 55)'/></g><circle cx='50' cy='55' r='16' fill='%234c1d95'/></svg>" />
+  <title>Para Kiara — Flores Moradas</title>
+  <!-- Tipografías: Playfair Display (títulos) + Inter (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+    rel="stylesheet"
+  />
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Sin JS el hero quedaría invisible ([data-hero] usa opacity:0). Esto lo evita. -->
+  <noscript><style>[data-hero]{opacity:1!important;transform:none!important}.cargador{display:none!important}</style></noscript>
+</head>
+<body>
+  <!-- Pantalla de carga breve: flor que florece (se oculta vía JS) -->
+  <div class="cargador" id="cargador" role="status" aria-label="Cargando sorpresa">
+    <div class="cargador__flor" aria-hidden="true">🌷</div>
+    <p class="cargador__texto">Preparando tu sorpresa…</p>
+  </div>
+
+  <!-- Cursor personalizado sutil (solo escritorio con puntero fino, ver CSS/JS) -->
+  <div class="cursor-flor" id="cursor-flor" aria-hidden="true">🌷</div>
+
+  <!-- Enlace de salto para navegación por teclado (accesibilidad) -->
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <!-- Barra de progreso de scroll (fina, dorada). Se rellena vía JS con transform scaleX -->
+  <div class="progreso-scroll" aria-hidden="true"><div class="progreso-scroll__barra" id="barra-progreso"></div></div>
+
+  <!-- ===== 1. HERO A PANTALLA COMPLETA ===== -->
+  <header class="hero" id="inicio" aria-label="Bienvenida: Para Kiara, 9 de octubre">
+    <!-- Canvas de pétalos cayendo (decorativo, solo si no hay reduced-motion) -->
+    <canvas id="petalos" class="petalos" aria-hidden="true"></canvas>
+
+    <!-- Flor morada SVG animada (respira/gira suave vía CSS, solo transform) -->
+    <div class="flor-hero" aria-hidden="true">
+      <svg viewBox="0 0 120 160" width="120" height="160" role="presentation" focusable="false">
+        <!-- Tallo y hojas -->
+        <path d="M60 78 C60 105 58 130 60 152" stroke="#6a9a5f" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <ellipse cx="42" cy="118" rx="16" ry="9" fill="#A8C3A0" transform="rotate(-25 42 118)"/>
+        <ellipse cx="79" cy="130" rx="16" ry="9" fill="#A8C3A0" transform="rotate(25 79 130)"/>
+        <!-- Corola de la flor (grupo animado) -->
+        <g class="flor-hero__cabeza">
+          <!-- 12 pétalos morados -->
+          <g fill="#C4A1F0" stroke="#7C3AED" stroke-width="1.5">
+            <ellipse cx="60" cy="26" rx="11" ry="22"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(30 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(60 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(90 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(120 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(150 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(180 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(210 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(240 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(270 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(300 60 60)"/>
+            <ellipse cx="60" cy="26" rx="11" ry="22" transform="rotate(330 60 60)"/>
+          </g>
+          <!-- Centro -->
+          <circle cx="60" cy="60" r="18" fill="#4c1d95"/>
+          <circle cx="54" cy="55" r="3" fill="#E9D5FF" opacity="0.9"/>
+          <circle cx="64" cy="58" r="2.4" fill="#E9D5FF" opacity="0.8"/>
+          <circle cx="59" cy="66" r="2" fill="#E9D5FF" opacity="0.8"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero__contenido">
+      <!-- Etiqueta pequeña superior -->
+      <p class="hero__etiqueta" data-hero style="--d:.05s"><span aria-hidden="true">💜</span> Un regalo para ti <span aria-hidden="true">💜</span></p>
+      <!-- Título principal (JS lo divide en letras para fade-up escalonado) -->
+      <h1 class="hero__titulo" data-letras data-hero style="--d:.15s">Para Kiara</h1>
+      <!-- Subtítulo con la fecha especial -->
+      <p class="hero__subtitulo" data-hero style="--d:.45s">9 de octubre</p>
+      <p class="hero__descripcion" data-hero style="--d:.6s">
+        Hoy celebramos tu amistad, tu alegría y todo lo bonito que traes a mi vida.
+      </p>
+      <!-- Botón que baja suavemente a la siguiente sección (ver script.js) -->
+      <span data-hero style="--d:.75s"><a href="#por-que" class="boton" data-scroll data-confeti aria-label="Descubre tu sorpresa: bajar a la sección Por qué las flores moradas">Descubre tu sorpresa <span aria-hidden="true">↓</span></a></span>
+    </div>
+    <!-- Detalle decorativo inferior (solo visual, sin imágenes externas) -->
+    <div class="hero__flores" aria-hidden="true">🌷 💜 🌷 💜 🌷</div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main id="contenido" tabindex="-1">
+
+    <!-- ===== CUENTA ATRÁS hacia el 9 de octubre ===== -->
+    <section class="seccion seccion--contador" id="cuenta-atras" aria-labelledby="titulo-cuenta">
+      <div class="contenedor contenedor--estrecho">
+        <h2 class="seccion__titulo" id="titulo-cuenta">Cuenta atrás para tu día</h2>
+        <p class="seccion__intro">Cada segundo que pasa estamos más cerca de celebrar contigo.</p>
+        <!-- Temporizador: JS rellena los números o muestra el mensaje especial -->
+        <div class="contador" id="contador" role="timer" aria-live="off" aria-label="Cuenta atrás hacia el 9 de octubre">
+          <div class="contador__bloque"><span class="contador__numero" id="cd-dias">0</span><span class="contador__etiqueta">días</span></div>
+          <div class="contador__bloque"><span class="contador__numero" id="cd-horas">0</span><span class="contador__etiqueta">horas</span></div>
+          <div class="contador__bloque"><span class="contador__numero" id="cd-min">0</span><span class="contador__etiqueta">min</span></div>
+          <div class="contador__bloque"><span class="contador__numero" id="cd-seg">0</span><span class="contador__etiqueta">seg</span></div>
+        </div>
+        <p class="contador__mensaje" id="contador-mensaje" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- ===== 2. POR QUÉ LAS FLORES AMARILLAS ===== -->
+    <section class="seccion" id="por-que" aria-labelledby="titulo-por-que">
+      <div class="contenedor">
+        <h2 class="seccion__titulo" id="titulo-por-que">Por qué las flores moradas</h2>
+        <p class="seccion__intro">
+          Las flores moradas son el color de la calma y la magia: representan todo lo que significas para mí.
+        </p>
+
+        <div class="tarjetas-3">
+          <!-- Tarjeta 1: Alegría -->
+          <article class="tarjeta">
+            <span class="tarjeta__icono" aria-hidden="true">😄</span>
+            <h3 class="tarjeta__titulo">Alegría</h3>
+            <p class="tarjeta__texto">
+              Porque tu risa ilumina hasta los días grises. Eres pura buena energía.
+            </p>
+          </article>
+
+          <!-- Tarjeta 2: Amistad -->
+          <article class="tarjeta">
+            <span class="tarjeta__icono" aria-hidden="true">🤗</span>
+            <h3 class="tarjeta__titulo">Amistad</h3>
+            <p class="tarjeta__texto">
+              El morado es el color del cariño sincero, ese que se queda en las buenas y en las malas.
+            </p>
+          </article>
+
+          <!-- Tarjeta 3: Luz -->
+          <article class="tarjeta">
+            <span class="tarjeta__icono" aria-hidden="true">✨</span>
+            <h3 class="tarjeta__titulo">Luz</h3>
+            <p class="tarjeta__texto">
+              Como una lavanda que perfuma todo a su paso, tú siempre encuentras el lado bonito de la vida.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. GALERÍA DE FLORES AMARILLAS ===== -->
+    <section class="seccion seccion--clara" id="galeria" aria-labelledby="titulo-galeria">
+      <div class="contenedor">
+        <h2 class="seccion__titulo" id="titulo-galeria">Tu jardín morado</h2>
+        <p class="seccion__intro">
+          Seis flores, seis motivos para quererte. Sin imágenes externas, solo con emojis.
+        </p>
+
+        <div class="galeria">
+          <!-- 1. Lavanda -->
+          <article class="flor">
+            <span class="flor__emoji" aria-hidden="true">🌷</span>
+            <h3 class="flor__nombre">Lavanda</h3>
+            <p class="flor__significado">Calma y serenidad. A tu lado todo se siente en paz.</p>
+          </article>
+
+          <!-- 2. Violeta -->
+          <article class="flor">
+            <span class="flor__emoji" aria-hidden="true">🌸</span>
+            <h3 class="flor__nombre">Violeta</h3>
+            <p class="flor__significado">Humildad y lealtad. Amistad sincera sin condiciones.</p>
+          </article>
+
+          <!-- 3. Tulipán morado -->
+          <article class="flor">
+            <span class="flor__emoji" aria-hidden="true">🌷</span>
+            <h3 class="flor__nombre">Tulipán morado</h3>
+            <p class="flor__significado">Felicidad y nuevos comienzos. Lo bonito está por venir.</p>
+          </article>
+
+          <!-- 4. Lila -->
+          <article class="flor">
+            <span class="flor__emoji" aria-hidden="true">💜</span>
+            <h3 class="flor__nombre">Lila</h3>
+            <p class="flor__significado">Alegría suave y recuerdos bonitos que siempre guardas.</p>
+          </article>
+
+          <!-- 5. Orquídea morada -->
+          <article class="flor">
+            <span class="flor__emoji" aria-hidden="true">🌺</span>
+            <h3 class="flor__nombre">Orquídea morada</h3>
+            <p class="flor__significado">Admiración y belleza única. No hay nadie como tú.</p>
+          </article>
+
+          <!-- 6. Hortensia morada -->
+          <article class="flor">
+            <span class="flor__emoji" aria-hidden="true">💐</span>
+            <h3 class="flor__nombre">Hortensia morada</h3>
+            <p class="flor__significado">Gratitud y cariño abundante. Gracias por tanto.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. CARTA PERSONAL ===== -->
+    <section class="seccion" id="carta" aria-labelledby="titulo-carta">
+      <div class="contenedor contenedor--estrecho">
+        <h2 class="seccion__titulo" id="titulo-carta">Una carta para ti</h2>
+
+        <!-- Carta emotiva: edita el texto entre [CORCHETES] a tu gusto -->
+        <article class="carta" aria-label="Carta personal para Kiara">
+          <p class="carta__saludo">Querida Kiara,</p>
+          <!-- Este párrafo se "escribe" letra a letra cuando entra en pantalla (ver script.js) -->
+          <p class="carta__texto" data-maquina>
+            Hoy, 10 de octubre, quiero recordarte lo importante que eres para mí. 
+            Gracias por cada risa, cada consejo y cada momento compartido. 
+            Eres como estas flores moradas:
+            luz, alegría y amistad en mi vida.
+          </p>
+          <p>
+            Espero que este pequeño rincón morado te saque una sonrisa, hoy y siempre.
+          </p>
+          <p class="carta__firma">Con todo mi cariño,<br />Rogger</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 5. RAMO INTERACTIVO (final) ===== -->
+    <section class="seccion seccion--clara" id="ramo" aria-labelledby="titulo-ramo">
+      <div class="contenedor contenedor--estrecho">
+        <h2 class="seccion__titulo" id="titulo-ramo">Tu ramo interactivo</h2>
+        <p class="seccion__intro">
+          Toca una flor y descubre una frase sobre la amistad. Funciona con dedo y con teclado.
+        </p>
+        <!-- Botones grandes (44px+) para celular. JS muestra la frase en .ramo__mensaje -->
+        <div class="ramo" role="group" aria-label="Elige una flor del ramo">
+          <button type="button" class="ramo__flor" aria-pressed="false" data-frase="Eres la calma bonita que vuelve lila hasta el día más gris.">🌷<span class="ramo__nombre">Lavanda</span></button>
+          <button type="button" class="ramo__flor" aria-pressed="false" data-frase="La amistad contigo es suave y sincera, como una violeta.">🌸<span class="ramo__nombre">Violeta</span></button>
+          <button type="button" class="ramo__flor" aria-pressed="false" data-frase="Contigo, cada comienzo se siente un poco más feliz.">🌷<span class="ramo__nombre">Tulipán</span></button>
+          <button type="button" class="ramo__flor" aria-pressed="false" data-frase="Gracias por guardar con cariño todos nuestros recuerdos.">💜<span class="ramo__nombre">Lila</span></button>
+          <button type="button" class="ramo__flor" aria-pressed="false" data-frase="A tu lado, todo vuelve a florecer.">🌺<span class="ramo__nombre">Orquídea</span></button>
+          <button type="button" class="ramo__flor" aria-pressed="false" data-frase="Lo nuestro es cariño sincero del bueno, del de verdad.">💐<span class="ramo__nombre">Hortensia</span></button>
+        </div>
+        <p class="ramo__mensaje" id="ramo-mensaje" aria-live="polite">Elige una flor para ver tu frase 🌷</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 6. FOOTER ===== -->
+  <footer class="footer" aria-label="Créditos de la página">
+    <p>Hecho con cariño por <strong>Rogger</strong> para <strong>Kiara</strong> 💜</p>
+    <p class="footer__fecha">9 de octubre</p>
+  </footer>
+
+  <!-- Botón flotante de música ambiental (apagada por defecto, WebAudio sin archivos) -->
+  <button type="button" class="musica" id="btn-musica" aria-pressed="false" aria-label="Activar música ambiental suave">
+    <span class="musica__icono" id="musica-icono" aria-hidden="true">♪</span>
+  </button>
+
+  <!-- Script principal (scroll suave del botón del hero) -->
+  <!-- Canvas fijo para la explosión de confeti morado (decorativo) -->
+  <canvas id="confeti" class="confeti" aria-hidden="true"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>

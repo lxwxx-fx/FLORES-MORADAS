@@ -1,0 +1,1008 @@
+/* ==========================================================
+   Flores Moradas — styles.css
+   Diseño moderno, elegante y profesional.
+   Mobile first · Minimalista · Accesible
+   Paleta + tipografías + glassmorphism sutil.
+   Estructura HTML intacta (mismas clases e ids).
+   ========================================================== */
+
+/* --- 1. Variables de diseño --- */
+:root {
+  /* Paleta pedida */
+  --lila: #c4a1f0;            /* lila suave */
+  --morado: #7c3aed;          /* morado vibrante */
+  --lavanda: #f4edfd;         /* fondo lavanda */
+  --salvia: #a8c3a0;        /* verde salvia suave */
+  --carbon: #2b2b2b;        /* texto gris carbón */
+
+  /* Derivados (solo para sombras, bordes y estados) */
+  --blanco: #ffffff;
+  --lavanda-oscuro: #e9ddfb;
+  --carbon-suave: #4f4b40;  /* texto secundario, mantiene contraste AA sobre lavanda */
+  --morado-oscuro: #5b21b6; /* para hover / bordes, contraste mejorado */
+  --salvia-claro: #dde8d9;
+  --linea: rgba(43, 43, 43, 0.12);
+
+  /* Tipografías */
+  --fuente-titulos: "Playfair Display", Georgia, "Times New Roman", serif;
+  --fuente-texto: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Radios grandes + sombras suaves */
+  --radio-md: 20px;
+  --radio-lg: 24px;
+  --radio-xl: 32px;
+  --sombra-suave: 0 10px 30px rgba(43, 43, 43, 0.08);
+  --sombra-media: 0 18px 50px rgba(43, 43, 43, 0.12);
+  --sombra-boton: 0 8px 24px rgba(124, 58, 237, 0.35);
+
+  /* Anchos */
+  --max-ancho: 1100px;
+  --max-ancho-estrecho: 700px;
+}
+
+/* --- 2. Reset y base --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--fuente-texto);
+  font-size: clamp(1rem, 0.4vw + 0.95rem, 1.125rem);
+  line-height: 1.7;
+  color: var(--carbon);
+  background-color: var(--blanco);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Selección cálida */
+::selection {
+  background: var(--lila);
+  color: var(--carbon);
+}
+
+/* Imágenes / emojis nunca rompen el layout */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Emojis: pila de fuentes color para que Windows/macOS/Android usen la que sí tienen.
+   Evita rectángulos □ cuando la fuente del sistema es vieja. */
+.hero__etiqueta,
+.hero__flores,
+.tarjeta__icono,
+.flor__emoji,
+.ramo__flor,
+.cargador__flor,
+.cursor-flor,
+.musica__icono,
+.contador__mensaje,
+.ramo__mensaje {
+  font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "Apple Color Emoji", "Twemoji Mozilla", system-ui, sans-serif;
+}
+
+/* --- 3. Accesibilidad: skip-link y foco visible --- */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  background: var(--carbon);
+  color: var(--lavanda);
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Foco visible global, coherente con la paleta */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--carbon);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* --- 4. Utilidades generales --- */
+.contenedor {
+  width: 100%;
+  max-width: var(--max-ancho);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.contenedor--estrecho {
+  max-width: var(--max-ancho-estrecho);
+}
+
+/* Mucho espacio en blanco, estilo minimalista */
+.seccion {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+}
+
+.seccion--clara {
+  background-color: var(--lavanda);
+  /* Sutil transición entre secciones */
+  border-top: 1px solid rgba(124, 58, 237, 0.18);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.18);
+}
+
+/* Jerarquía tipográfica fluida con clamp() */
+.seccion__titulo {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 3.5vw + 1rem, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--carbon);
+  margin-bottom: 0.75rem;
+  text-wrap: balance;
+}
+
+.seccion__intro {
+  text-align: center;
+  color: var(--carbon-suave);
+  font-size: clamp(1.02rem, 1vw + 0.9rem, 1.2rem);
+  max-width: 38rem;
+  margin: 0 auto clamp(2rem, 4vw, 3.5rem);
+  text-wrap: pretty;
+}
+
+/* --- 5. Botones con hover y focus cuidados --- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-family: var(--fuente-texto);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+  color: var(--carbon);
+  /* Degradado claro para que el texto carbón mantenga contraste AA (≥6:1) */
+  background: linear-gradient(135deg, #d8b4fe 0%, var(--lila) 100%);
+  border: 2px solid var(--carbon);
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: var(--sombra-boton);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.boton:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 14px 32px rgba(124, 58, 237, 0.45);
+}
+
+.boton:active {
+  transform: translateY(0);
+  box-shadow: var(--sombra-suave);
+}
+
+/* Focus elegante y visible (contraste alto) */
+.boton:focus-visible {
+  outline: 3px solid var(--carbon);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px rgba(196, 161, 240, 0.6);
+}
+
+/* --- 6. Hero con degradado cálido --- */
+.hero {
+  min-height: 100vh; /* fallback */
+  min-height: 100svh; /* móvil: ignora la barra de direcciones del navegador */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 8vw, 6rem) 1.25rem 3rem;
+
+  /* Degradado cálido lavanda → lila → morado */
+  background:
+    radial-gradient(700px 420px at 15% 10%, rgba(255, 255, 255, 0.7), transparent 60%),
+    radial-gradient(600px 500px at 90% 20%, rgba(168, 195, 160, 0.35), transparent 60%),
+    linear-gradient(180deg, var(--lavanda) 0%, #e3d0fa 35%, var(--lila) 72%, #a179e8 100%);
+}
+
+/* Halo decorativo inferior para dar profundidad */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -140px;
+  width: min(900px, 120vw);
+  height: 280px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.65), transparent);
+  pointer-events: none;
+}
+
+.hero__contenido {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radio-xl);
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+  box-shadow: var(--sombra-media);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.hero__etiqueta {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--carbon);
+  background: rgba(255, 248, 225, 0.9);
+  border: 1px solid var(--linea);
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+
+.hero__titulo {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: clamp(2.8rem, 7vw + 1rem, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--carbon);
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+  max-width: 100%;
+  overflow-wrap: break-word; /* 360px: nombres largos no desbordan */
+}
+
+.hero__subtitulo {
+  font-family: var(--fuente-titulos);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.3rem, 2.5vw + 0.8rem, 1.9rem);
+  color: var(--carbon);
+  margin-bottom: 1rem;
+}
+
+/* Subrayado morado elegante */
+.hero__subtitulo::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: 0.75rem auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--morado), var(--lila));
+}
+
+.hero__descripcion {
+  color: var(--carbon-suave);
+  font-size: clamp(1.02rem, 1vw + 0.9rem, 1.2rem);
+  max-width: 30rem;
+  margin: 0 auto 2rem;
+  text-wrap: pretty;
+}
+
+.hero__flores {
+  position: relative;
+  z-index: 1;
+  margin-top: 2.25rem;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  letter-spacing: 0.6rem;
+  opacity: 0.95;
+}
+
+/* --- 7. Tarjetas "Por qué" con glassmorphism sutil --- */
+.tarjetas-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+  perspective: 900px; /* base para rotación 3D suave de las tarjetas */
+}
+
+.tarjeta {
+  position: relative;
+  overflow: hidden; /* contiene el brillo */
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  outline: 1px solid rgba(124, 58, 237, 0.22);
+  border-radius: var(--radio-lg);
+  padding: clamp(1.75rem, 3vw, 2.25rem);
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Brillo diagonal que cruza la tarjeta en hover (solo opacity + transform) */
+.tarjeta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.65) 48%, transparent 62%);
+  opacity: 0;
+  transform: translateX(-60%);
+  transition: opacity 0.35s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.tarjeta:hover::after {
+  opacity: 1;
+  transform: translateX(60%);
+}
+
+.tarjeta:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sombra-media);
+}
+
+.tarjeta__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lavanda), var(--lila));
+  border: 1px solid rgba(124, 58, 237, 0.35);
+}
+
+.tarjeta__titulo {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.3rem, 2vw + 0.9rem, 1.5rem);
+  font-weight: 700;
+  color: var(--carbon);
+  margin-bottom: 0.5rem;
+}
+
+.tarjeta__texto {
+  color: var(--carbon-suave);
+}
+
+/* --- 8. Galería de flores --- */
+.galeria {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+  perspective: 900px; /* base 3D para el tilt de .flor */
+}
+
+.flor {
+  position: relative;
+  overflow: hidden; /* contiene el brillo */
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  outline: 1px solid rgba(168, 195, 160, 0.4);
+  border-radius: var(--radio-lg);
+  padding: clamp(1.6rem, 3vw, 2rem);
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Brillo + elevación en hover (solo transform/opacity) */
+.flor::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.7) 48%, transparent 62%);
+  opacity: 0;
+  transform: translateX(-60%);
+  transition: opacity 0.35s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.flor:hover::after {
+  opacity: 1;
+  transform: translateX(60%);
+}
+
+.flor:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sombra-media);
+}
+
+.flor__emoji {
+  font-size: clamp(2.6rem, 5vw, 3.2rem);
+  display: block;
+  margin-bottom: 0.6rem;
+  line-height: 1;
+}
+
+.flor__nombre {
+  font-family: var(--fuente-titulos);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--carbon);
+  margin-bottom: 0.35rem;
+}
+
+.flor__significado {
+  font-size: 0.98rem;
+  color: var(--carbon-suave);
+}
+
+/* --- 9. Carta personal --- */
+.carta {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-left: 6px solid var(--morado);
+  border-radius: var(--radio-lg);
+  padding: clamp(2rem, 5vw, 3rem);
+  box-shadow: var(--sombra-media);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.carta p + p {
+  margin-top: 1.1rem;
+}
+
+/* Reserva altura para no mover el layout mientras se "escribe" */
+.carta__texto {
+  min-height: 7rem;
+}
+
+/* Cursor de máquina de escribir (solo opacity) */
+.carta__texto.escribiendo::after {
+  content: "▍";
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--morado-oscuro);
+  animation: cursor-parpadeo 1s steps(1) infinite;
+}
+
+@keyframes cursor-parpadeo {
+  50% { opacity: 0; }
+}
+
+.carta__saludo {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2vw + 0.9rem, 1.5rem);
+}
+
+.carta__firma {
+  font-family: var(--fuente-titulos);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--carbon);
+  border-top: 1px dashed rgba(43, 43, 43, 0.25);
+  padding-top: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* --- 10. Footer --- */
+.footer {
+  text-align: center;
+  padding: clamp(2.5rem, 5vw, 3.5rem) 1.25rem;
+  background-color: var(--carbon);
+  color: var(--lavanda);
+  font-size: 0.98rem;
+}
+
+.footer strong {
+  color: var(--lila);
+  font-weight: 700;
+}
+
+.footer__fecha {
+  margin-top: 0.4rem;
+  color: var(--salvia);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ==========================================================
+   12. Animaciones modernas (solo transform + opacity, 60fps)
+   ========================================================== */
+
+/* --- 12a. Barra de progreso de scroll (se escala con transform) --- */
+.progreso-scroll {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 200;
+  pointer-events: none;
+  background: transparent;
+}
+
+.progreso-scroll__barra {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lila), var(--morado));
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+/* --- 12b. Canvas de pétalos en el hero --- */
+.petalos {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* El contenido queda por encima del canvas */
+.hero__contenido,
+.hero__flores {
+  z-index: 1;
+}
+
+/* --- 12c. Flor hero SVG animada (respira + balanceo, solo transform) --- */
+.flor-hero {
+  position: absolute;
+  top: clamp(1rem, 4vw, 2.5rem);
+  right: clamp(1rem, 5vw, 3rem);
+  width: clamp(84px, 13vw, 132px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.95;
+  filter: drop-shadow(0 10px 20px rgba(76, 29, 149, 0.18));
+  animation: flor-hero-balanceo 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.flor-hero__cabeza {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flor-hero-respira 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes flor-hero-balanceo {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes flor-hero-respira {
+  0%, 100% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.06); }
+}
+
+/* --- 12d. Entrada escalonada del hero (fade-up) --- */
+[data-hero] {
+  opacity: 0;
+  transform: translateY(26px);
+  will-change: transform, opacity;
+}
+
+/* El botón va envuelto en un span: necesita bloque para transformarse */
+span[data-hero] {
+  display: inline-block;
+}
+
+.hero.cargado [data-hero] {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--d, 0s);
+}
+
+/* Letras del título: aparecen una a una */
+.hero__titulo .letra {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.55em) rotate(3deg);
+  will-change: transform, opacity;
+}
+
+.hero.cargado .hero__titulo .letra {
+  animation: letra-subir 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation-delay: calc(var(--i) * 45ms + 150ms);
+}
+
+.hero__titulo .letra--espacio {
+  white-space: pre;
+}
+
+@keyframes letra-subir {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* --- 12e. Scroll reveal (fade + slide, lo activa IntersectionObserver) --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: transform, opacity;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--retraso, 0s);
+}
+
+/* Profundidad 3D en hover: el emoji "flota" un poco */
+.flor__emoji,
+.tarjeta__icono {
+  transform: translateZ(30px);
+  transition: transform 0.25s ease;
+}
+
+/* --- 12f. Canvas de confeti (fijo, a pantalla completa) --- */
+.confeti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 300;
+  pointer-events: none;
+}
+
+/* ==========================================================
+   14. Toques finales (solo transform + opacity)
+   ========================================================== */
+
+/* --- 14a. Pantalla de carga con flor que florece --- */
+.cargador {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--lavanda);
+  transition: opacity 0.4s ease;
+}
+
+.cargador.oculto {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cargador__flor {
+  font-size: clamp(3.5rem, 12vw, 5rem);
+  line-height: 1;
+  animation: florecer 1.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes florecer {
+  0%, 100% { transform: scale(0.75) rotate(-8deg); opacity: 0.8; }
+  50% { transform: scale(1.1) rotate(8deg); opacity: 1; }
+}
+
+.cargador__texto {
+  color: var(--carbon-suave);
+  font-weight: 600;
+}
+
+/* --- 14b. Cursor personalizado sutil (solo puntero fino) --- */
+.cursor-flor {
+  display: none; /* se activa vía JS solo en escritorio */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 400;
+  font-size: 1.35rem;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.25s ease;
+  will-change: transform;
+  filter: drop-shadow(0 2px 6px rgba(43, 43, 43, 0.2));
+}
+
+.cursor-flor.activo {
+  opacity: 0.9;
+}
+
+/* Nunca en táctil */
+@media (hover: none), (pointer: coarse) {
+  .cursor-flor {
+    display: none !important;
+  }
+}
+
+/* --- 14c. Cuenta atrás --- */
+.seccion--contador {
+  background: var(--blanco);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.18);
+}
+
+.contador {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.contador__bloque {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: var(--radio-md);
+  padding: 0.9rem 0.25rem;
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+}
+
+.contador__numero {
+  display: block;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 6vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--carbon);
+  font-variant-numeric: tabular-nums; /* números estables, sin saltos */
+}
+
+.contador__etiqueta {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--carbon-suave);
+}
+
+.contador__mensaje {
+  text-align: center;
+  font-weight: 600;
+  min-height: 2rem;
+  color: var(--carbon);
+}
+
+/* Estado "hoy es el día": mensaje protagonista (fondo claro por contraste) */
+.contador--hoy .contador__bloque {
+  background: linear-gradient(135deg, #d8b4fe, var(--lila));
+}
+
+.contador__mensaje--fiesta {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+}
+
+/* --- 14d. Botón flotante de música (44px+ para celular) --- */
+.musica {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  z-index: 250;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--carbon);
+  /* Degradado claro: el icono carbón mantiene contraste AA */
+  background: linear-gradient(135deg, #d8b4fe, var(--lila));
+  color: var(--carbon);
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: var(--sombra-boton);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.musica:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.musica:active {
+  transform: translateY(0);
+}
+
+/* Estado sonando: pulso suave (solo transform/opacity) */
+.musica[aria-pressed="true"] {
+  animation: musica-pulso 2.4s ease-in-out infinite;
+}
+
+@keyframes musica-pulso {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+
+/* --- 14e. Ramo interactivo --- */
+.ramo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cols en móvil, 3 en tablet+ */
+  gap: 0.8rem;
+  perspective: 800px;
+}
+
+.ramo__flor {
+  min-height: 104px; /* objetivo táctil amplio */
+  padding: 1rem 0.5rem 0.85rem;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  font-family: var(--fuente-texto);
+  color: var(--carbon);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: var(--radio-md);
+  box-shadow: var(--sombra-suave);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.ramo__flor:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-media);
+}
+
+.ramo__flor.activa {
+  border-color: var(--morado);
+  border-width: 2px;
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-media);
+  background: linear-gradient(180deg, #faf7ff, var(--lavanda));
+}
+
+.ramo__nombre {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.ramo__mensaje {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-family: var(--fuente-titulos);
+  font-style: italic;
+  font-size: clamp(1.05rem, 3.5vw, 1.3rem);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: var(--radio-md);
+  padding: 1.25rem 1.25rem;
+  min-height: 4.5rem; /* evita saltos de layout */
+  box-shadow: var(--sombra-suave);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Cambio de frase: fundido rápido */
+.ramo__mensaje.cambiando {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* ==========================================================
+   13. Responsive (mobile first ya aplicado arriba)
+   ========================================================== */
+
+/* Destino del skip-link: recibe foco programático, sin contorno gigante */
+#contenido:focus {
+  outline: none;
+}
+
+/* Pantallas muy pequeñas (360px): contador y flor-hero compactos */
+@media (max-width: 399px) {
+  .contador {
+    gap: 0.45rem;
+  }
+
+  .contador__bloque {
+    padding: 0.7rem 0.15rem;
+  }
+
+  .contador__etiqueta {
+    font-size: 0.7rem;
+  }
+
+  .flor-hero {
+    width: 72px;
+    opacity: 0.55; /* no tapa la tarjeta en 360px */
+  }
+}
+
+/* Tablet: 2 columnas */
+@media (min-width: 600px) {
+  .tarjetas-3,
+  .galeria {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ramo {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .contador {
+    gap: 1rem;
+  }
+}
+
+/* Escritorio: 3 columnas + más aire */
+@media (min-width: 900px) {
+  .tarjetas-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .galeria {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hero__contenido {
+    padding: 3.5rem 3.5rem;
+  }
+}
+
+/* Respeta a usuarios con movimiento reducido: todo estático y visible */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Todo visible sin desplazamientos */
+  [data-hero],
+  .reveal,
+  .hero__titulo .letra {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Sin canvases ni decoraciones en movimiento */
+  .petalos,
+  .confeti,
+  .flor-hero,
+  .progreso-scroll,
+  .cursor-flor {
+    display: none !important;
+  }
+
+  .cargador {
+    display: none !important; /* sin espera si no hay animación */
+  }
+
+  .tarjeta::after,
+  .flor::after {
+    display: none !important;
+  }
+
+  .carta__texto {
+    min-height: 0;
+  }
+
+  .carta__texto.escribiendo::after {
+    content: none;
+  }
+}
